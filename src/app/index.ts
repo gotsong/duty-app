@@ -5,7 +5,7 @@ import {FORM_PROVIDERS} from '@angular/common';
 
 import '../style/app.scss';
 
-import {Api} from './services/api';         // ./services/api/index.ts
+import {Api} from './services/api';
 import routes from './routes';
 
 /*

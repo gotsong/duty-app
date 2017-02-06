@@ -12,19 +12,17 @@ import DateTimeFormat = Intl.DateTimeFormat;
 })
 export class Admin implements OnInit{
     constructor(private api: Api) {}
-
-    residents: Resident[]
+    userId = 1234
+    residents
     selectedResidents: Resident[]
-    residentReports: ResidentReport[]
+    residentReports
 
     ngOnInit(){
         console.log('Admin!')
-        this.api.getResidents()
-            .map(residents => this.residents = residents)
+        this.residents  = this.api.getResidents(this.userId)
     }
 
     getResidentsReport(){
-        this.api.getResidentReports(this.selectedResidents)
-            .map(reports => this.residentReports = reports)
+        this.residentReports = this.api.getResidentReports(this.selectedResidents)
     }
 }

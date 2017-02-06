@@ -1,1 +1,40 @@
-<div>admin</div>
+<div>Admin</div>
+<br>
+<table style="margin:0 auto">
+  <thead>
+  <th><b>First Name</b></th>
+  <th><b>Last Name</b></th>
+  <th><b>Selected</b></th>
+  </thead>
+  <tbody>
+  <tr *ngFor="let resident of residents">
+    <td><input type="checkbox" [(ngModel)]="resident.selected"></td>
+    <td>{{resident.firstName}}</td>
+    <td>{{resident.lastName}}</td>
+  </tr>
+  </tbody>
+</table>
+<br>
+<button (click)="getResidentsReport()" class="btn" style="height:30px;width:120px;color:black">Get Duty Analysis
+</button>
+<br><br>
+<div [style.visibility]="residentReports ? 'visible' : 'hidden'">
+  <ul>
+    <li *ngFor="let report of residentReports">
+      <label>FirstName: {{report.firstName}}</label>&nbsp;
+      <label>LastName: {{report.lastName}}</label><br>
+      <label>Violations: {{report.violationCount}}</label><br>
+      <ul>
+        <li *ngFor="let violation of report.violations">
+          Violation: {{ violation.name }} &nbsp; &nbsp;
+          <ul>
+            <li *ngFor="let shift of violation.shifts">
+              Violation Start Time: {{ shift.startDate }} &nbsp; &nbsp;
+              Violation End Time: {{shift.endDate}}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

@@ -1,55 +1,109 @@
 import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import DateTimeFormat = Intl.DateTimeFormat;
 
 
-export class DutyPeriod{
-    constructor(public startDate: DateTimeFormat, public endDate: DateTimeFormat) { }
+export class DutyPeriod {
+    constructor(public startDate: Date, public endDate: Date) {
+    }
 }
 
-export class Resident{
-    constructor(public startDate: DateTimeFormat, public endDate: DateTimeFormat) { }
+export class Resident {
+    constructor(public firstName: String, public lastName: String, public selected: Boolean) {
+    }
 }
 
-export class ResidentReport{
-    constructor(public startDate: DateTimeFormat, public endDate: DateTimeFormat) { }
+export class Shift {
+    constructor(public startDate: Date, public endDate: Date) {
+    }
+}
+
+export class ResidentReport {
+    constructor(public firstName: String,
+                public lastName: String,
+                public violation: String,
+                public violationCount: Number,
+                public shifts: Array<Shift>) {
+    }
 }
 
 @Injectable()
 export class Api {
-    constructor(private http:Http) { }
-    title: string = 'DutyApi';
-
-    public getDuties(userId) {
-        return this.http.get('/api/duties/' + userId)
-             .map((response: Response) => <DutyPeriod[]>response.json().data)
-             .catch(this.handleError);
+    constructor(private http: Http) {
     }
 
-    addDuty(duty: DutyPeriod) {
-        return this.http.post('/api/residents', duty)
-            .map((response: Response) => <DutyPeriod[]>response.json().data)
-            .catch(this.handleError);
-    }
+    title: string = 'DutyApp';
 
-    getResidents() {
-        return this.http.get('/api/residents')
-            .map((response: Response) => <Resident[]>response.json().data)
-            .catch(this.handleError);
-    }
+    getDuties = (userId) => [
+        {startDate: new Date(2012, 4, 23, 14, 15, 0, 0), endDate: new Date(2012, 4, 23, 18, 15, 0, 0)},
+        {startDate: new Date(2012, 4, 24, 14, 15, 0, 0), endDate: new Date(2012, 4, 24, 18, 15, 0, 0)}
+    ];
+
+    addDuty = (duty: DutyPeriod) => [
+        {startDate: new Date(2012, 4, 23, 14, 15, 0, 0), endDate: new Date(2012, 4, 23, 18, 15, 0, 0)},
+        {startDate: new Date(2012, 4, 24, 14, 15, 0, 0), endDate: new Date(2012, 4, 24, 18, 15, 0, 0)},
+        {startDate: new Date(2012, 4, 25, 14, 15, 0, 0), endDate: new Date(2012, 4, 24, 18, 15, 0, 0)}
+    ];
+
+    getResidents = (userId) => [
+        {firstName: "Mary", lastName: "Davis", selected: false},
+        {firstName: "Jim", lastName: "Davis", selected: false},
+        {firstName: "Eddie", lastName: "VanHalen", selected: false},
+        {firstName: "Wes", lastName: "Montgomery", selected: false},
+        {firstName: "George", lastName: "Benson", selected: false},
+        {firstName: "Kenny", lastName: "Burrell", selected: false},
+        {firstName: "Jimmy", lastName: "Raney", selected: false},
+        {firstName: "Norman", lastName: "Brown", selected: false}
+    ];
 
     getResidentReport(residentId) {
-        return this.http.post('/api/residentreport', residentId)
-            .map((response: Response) => <ResidentReport>response.json().data)
-            .catch(this.handleError);
-    }
+        return {
+            firstName: "Mary",
+            lastName: "Davis",
+            violationCount: 1,
+            violations: [
+                {
+                    name: "Hours Over 80",
+                    shifts: [{
+                        startDate: new Date(2012, 4, 24, 14, 15, 0, 0),
+                        endDate: new Date(2012, 4, 24, 18, 15, 0, 0)
+                    }]
+                }
+            ]
+        }
+    };
 
-    getResidentReports(residents) {
-        return this.http.post('/api/residentreports', residents)
-            .map((response: Response) => <ResidentReport[]>response.json().data)
-            .catch(this.handleError);
-    }
+    getResidentReports = (residents: Resident[]) => [
+        {
+            firstName: "Mary",
+            lastName: "Davis",
+            violationCount: 1,
+            violations: [
+                {
+                    name: "Hours Over 80",
+                    shifts: [{
+                        startDate: new Date(2012, 4, 24, 14, 15, 0, 0),
+                        endDate: new Date(2012, 4, 24, 18, 15, 0, 0)
+                    }]
+                }
+            ]
+        },
+        {
+            firstName: "Jeff",
+            lastName: "Miles",
+            violationCount: 1,
+            violations: [
+                {
+                    name: "Less than 8 hr between shifts",
+                    shifts: [{
+                        startDate: new Date(2012, 4, 24, 14, 15, 0, 0),
+                        endDate: new Date(2012, 4, 24, 18, 15, 0, 0)
+                    }]
+                }
+            ]
+        }
+    ];
 
     private handleError(error: Response) {
         console.error(error);

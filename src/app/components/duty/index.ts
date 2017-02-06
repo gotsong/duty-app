@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Component, OnInit} from '@angular/core';
-import {Api,DutyPeriod, ResidentReport} from '../../services/api';
+import {Api, ResidentReport} from '../../services/api';
 import DateTimeFormat = Intl.DateTimeFormat;
 
 @Component({
@@ -17,29 +17,31 @@ export class Duty implements OnInit{
     constructor(private api: Api){}
 
     userId = 1234; //TODO: Security not implemented
-    duties: DutyPeriod[]
-    residentReport: ResidentReport
-    start: DateTimeFormat
-    end: DateTimeFormat
+    duties
+    residentReport
+    firstName
+    lastName
+    violationCount
+    violations
+    start: Date
+    end: Date
 
 
     ngOnInit(){
         console.log('Duty!')
-        this.api.getDuties(this.userId)
-            .map(duties => this.duties = duties)
+        this.duties = this.api.getDuties(this.userId)
     }
 
     addDuty(){
-        this.api.addDuty({startDate: this.start,endDate: this.end})
-            .map(duties => {
-                return this.duties = duties;
-            })
+        this.duties = this.api.addDuty({startDate: this.start,endDate: this.end})
     }
 
     getResidentReport(){
-        this.api.getResidentReport(this.userId)
-            .map(report => {
-                return this.residentReport = report;
-            })
+        this.residentReport = this.api.getResidentReport(this.userId)
+        this.firstName = this.residentReport.firstName
+        this.lastName = this.residentReport.lastName
+        this.violationCount = this.residentReport.violationCount
+        this.violations = this.residentReport.violations
     }
 }
+

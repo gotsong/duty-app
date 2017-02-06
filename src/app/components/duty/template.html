@@ -1,1 +1,31 @@
-<div>duty</div>
+<div>Duty Hours</div>
+
+<ul>
+  <li *ngFor="let duty of duties">
+      Duty Start Time: {{ duty.startDate }} &nbsp; &nbsp;
+      Duty End Time: {{duty.endDate}}
+  </li>
+</ul>
+
+//TODO: Placeholder for Start and End date entry to call addDuty() on Submit Duty button click
+<br><br>
+<button (click)="addDuty()" class="btn" style="height:30px;width:120px;color:black">Submit Duty</button>
+<br><br>
+<button (click)="getResidentReport()" class="btn" style="height:30px;width:120px;color:black">Get Duty Analysis</button>
+<br><br>
+<div [style.visibility]= "residentReport ? 'visible' : 'hidden'">
+  <label>FirstName: {{firstName}}</label>&nbsp;
+  <label>LastName: {{lastName}}</label><br>
+  <label>Violations: {{violationCount}}</label><br>
+  <ul>
+    <li *ngFor="let violation of violations">
+      Violation: {{ violation.name }} &nbsp; &nbsp;
+      <ul>
+        <li *ngFor="let shift of violation.shifts">
+          Violation Start Time: {{ shift.startDate }} &nbsp; &nbsp;
+          Violation End Time: {{shift.endDate}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
