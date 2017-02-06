@@ -1,11 +1,9 @@
 # DutyApp
 
 ## Installation
-### Clone repo locally
-
-### npm install
-
-### npm start
+* Clone repo locally
+* npm install
+* npm start
 
 ## Usage
 The following directories include custom code:
