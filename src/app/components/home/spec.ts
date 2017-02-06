@@ -1,10 +1,5 @@
 import {
-  it,
-  fit,
-  inject,
   describe,
-  ddescribe,
-  beforeEachProviders,
 } from '@angular/core/testing';
 
 import {Home} from './index';
