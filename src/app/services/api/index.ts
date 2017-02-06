@@ -3,7 +3,7 @@ import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import DateTimeFormat = Intl.DateTimeFormat;
 
-
+// Types representing the api
 export class DutyPeriod {
     constructor(public startDate: Date, public endDate: Date) {
     }
@@ -19,17 +19,22 @@ export class Shift {
     }
 }
 
+export class Violation{
+    constructor(public name: String,
+                public shifts: Shift[]){}
+}
+
 export class ResidentReport {
     constructor(public firstName: String,
                 public lastName: String,
-                public violation: String,
                 public violationCount: Number,
-                public shifts: Array<Shift>) {
+                public violations: Violation[]) {
     }
 }
 
 @Injectable()
 export class Api {
+    //http placeholder for active api
     constructor(private http: Http) {
     }
 
@@ -47,8 +52,8 @@ export class Api {
     ];
 
     getResidents = (userId) => [
-        {firstName: "Mary", lastName: "Davis", selected: false},
-        {firstName: "Jim", lastName: "Davis", selected: false},
+        {firstName: "Mark", lastName: "Whitfield", selected: false},
+        {firstName: "Jimmy", lastName: "Hendrix", selected: false},
         {firstName: "Eddie", lastName: "VanHalen", selected: false},
         {firstName: "Wes", lastName: "Montgomery", selected: false},
         {firstName: "George", lastName: "Benson", selected: false},

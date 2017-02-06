@@ -1,5 +1,5 @@
 import {Component,OnInit} from '@angular/core';
-import {Api,ResidentReport, Resident} from '../../services/api';
+import {Api, Resident, ResidentReport} from '../../services/api';
 import DateTimeFormat = Intl.DateTimeFormat;
 
 @Component({
@@ -12,10 +12,10 @@ import DateTimeFormat = Intl.DateTimeFormat;
 })
 export class Admin implements OnInit{
     constructor(private api: Api) {}
-    userId = 1234
-    residents
-    selectedResidents: Resident[]
-    residentReports
+    userId = 1234 //TODO: Security not implemented
+    residents: Resident[] = []
+    selectedResidents: Resident[] = []
+    residentReports: ResidentReport[] = []
 
     ngOnInit(){
         console.log('Admin!')
@@ -23,6 +23,17 @@ export class Admin implements OnInit{
     }
 
     getResidentsReport(){
+
+        for(let x in this.residents) {
+            if(this.residents[x].selected) {
+                this.residents[x].selected = false
+                this.selectedResidents.push(this.residents[x]);
+            }
+        }
+
+        if(this.selectedResidents.length == 0) return
+
         this.residentReports = this.api.getResidentReports(this.selectedResidents)
+        this.selectedResidents = [];
     }
 }

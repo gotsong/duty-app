@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Component, OnInit} from '@angular/core';
-import {Api, ResidentReport} from '../../services/api';
+import {Api} from '../../services/api';
 import DateTimeFormat = Intl.DateTimeFormat;
 
 @Component({
